@@ -8,4 +8,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MapaMinimapa.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/menu.unity
+    guid: fc6759fc1c608344d913940cefa88d29
+  - enabled: 1
+    path: Assets/Scenes/creditos.unity
+    guid: 1665e76f8ed0c6f4e9577728b309d984
+  - enabled: 1
+    path: Assets/Scenes/inventario.unity
+    guid: b04f696c95c26f24c8e7f13b7fbadfc3
   m_configObjects: {}
