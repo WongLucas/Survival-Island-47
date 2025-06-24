@@ -7,6 +7,7 @@ public class AkmFire : MonoBehaviour
     public GameObject theGun;
     public AudioSource gunShot;
     public bool isFiring = false;
+    public GameObject muzzleFlash;
 
     void Update()
     {
@@ -23,8 +24,11 @@ public class AkmFire : MonoBehaviour
     {
         isFiring = true;
         theGun.GetComponent<Animator>().Play("AK_fire");
+        muzzleFlash.SetActive(true);
         gunShot.Play();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.05f);
+        muzzleFlash.SetActive(false);
+        yield return new WaitForSeconds(0.45f);
         theGun.GetComponent<Animator>().Play("New State");
         isFiring = false;
     }
