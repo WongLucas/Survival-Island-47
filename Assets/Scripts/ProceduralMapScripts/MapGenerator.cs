@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 using System.Threading;
 using System.Collections.Generic;
-
+//asassa
 public class MapGenerator : MonoBehaviour {
 
 	public enum DrawMode {NoiseMap, ColourMap, Mesh, FalloffMap};
