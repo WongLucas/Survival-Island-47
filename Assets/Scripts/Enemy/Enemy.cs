@@ -1,34 +1,48 @@
 using UnityEngine;
-using UnityEngine.AI;
 using System;
 
 public class Enemy : MonoBehaviour
 {
-    public float health = 100f;
-    public Transform target;
-    private NavMeshAgent agent;
+    public float baseSpeed = 3f;
+    public int baseHealth = 100;
+    private int currentHealth;
+    public Action OnDeath;
 
-    public event Action OnDeath;
+    private UnityEngine.AI.NavMeshAgent agent;
+    private Transform player;
+    public int rewardMoney = 10;
 
-    void Start()
+    void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        if (agent != null && player != null)
+            agent.SetDestination(player.position);
     }
 
-    void Update()
+    // Chamada após instanciar o inimigo
+    public void Initialize(int scaledHealth, float scaledSpeed)
     {
-        if (target != null)
-            agent.SetDestination(target.position);
+        currentHealth = scaledHealth;
+        if (agent != null)
+            agent.speed = scaledSpeed;
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float amount)
     {
-        health -= damage;
-        if (health <= 0f)
+        currentHealth -= (int)amount;
+        if (currentHealth <= 0)
         {
-            OnDeath?.Invoke();
-            Destroy(gameObject);
+            if (GameManager.Instance != null)
+                GameManager.Instance.AddMoney(rewardMoney);
+
+            Die();
         }
+    }
+
+    void Die()
+    {
+        OnDeath?.Invoke();
+        Destroy(gameObject);
     }
 }
