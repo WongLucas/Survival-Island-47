@@ -79,7 +79,7 @@ namespace StarterAssets
 		{
 			_controller = GetComponent<CharacterController>();
 			_input = GetComponent<StarterAssetsInputs>();
-			_stamina = FindObjectOfType<stamina>();  // 👈 pega o script de stamina na cena
+			_stamina = FindObjectOfType<stamina>();  // pega o componente de stamina na cena
 
 #if ENABLE_INPUT_SYSTEM
 			_playerInput = GetComponent<PlayerInput>();
@@ -128,11 +128,18 @@ namespace StarterAssets
 		{
 			float targetSpeed = MoveSpeed;
 
-			// Sprint só se tiver stamina
-			if (_input.sprint && _stamina != null && _stamina.HasStamina())
+			// Sprint apenas se o botão estiver pressionado e ainda houver stamina
+			if (_input.sprint && _stamina != null)
 			{
-				targetSpeed = SprintSpeed;
-				_stamina.DrainStamina(_stamina.StaminaDrainRate);
+				if (_stamina.HasStamina())
+				{
+					targetSpeed = SprintSpeed;
+					_stamina.DrainStamina(_stamina.StaminaDrainRate);
+				}
+				else
+				{
+					_input.sprint = false; // stamina acabou, cancela o sprint
+				}
 			}
 			else
 			{
@@ -219,8 +226,7 @@ namespace StarterAssets
 			Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
 			Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
 
-			if (Grounded) Gizmos.color = transparentGreen;
-			else Gizmos.color = transparentRed;
+			Gizmos.color = Grounded ? transparentGreen : transparentRed;
 
 			Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
 		}

@@ -6,7 +6,7 @@ public class stamina : MonoBehaviour
     public Slider StaminaSlider;
     public float MaxStamina = 100f;
     public float CurrentStamina;
-    public float StaminaRegenRate = 10f;   // quanto recupera por segundo
+    public float StaminaRegenRate = 3f;   // quanto recupera por segundo
     public float StaminaDrainRate = 20f;   // quanto consome por segundo
 
     void Start()
@@ -27,10 +27,12 @@ public class stamina : MonoBehaviour
         CurrentStamina = Mathf.Max(CurrentStamina - amount * Time.deltaTime, 0f);
     }
 
-    public void RegenerateStamina(float amount)
-    {
-        CurrentStamina = Mathf.Min(CurrentStamina + amount * Time.deltaTime, MaxStamina);
-    }
+   public void RegenerateStamina(float amount)
+{
+    float regenAmount = CurrentStamina <= 0f ? amount / 2f : amount;
+    CurrentStamina = Mathf.Min(CurrentStamina + regenAmount * Time.deltaTime, MaxStamina);
+}
+
 
     public bool HasStamina()
     {

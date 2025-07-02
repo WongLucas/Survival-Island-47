@@ -1,18 +1,17 @@
- using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class dano : MonoBehaviour
 {
-    public int Dano =10; 
-    private  void OnTriggerEnter(Collider other)
-    {
-        other.GetComponent<vida>().receberDano(  Dano)   ;
-    }
+    public int Dano = 10;
 
-    // Update is called once per frame
-    void Update()
+    private void OnCollisionEnter(Collision collision)
     {
-        
+        // Verifica se colidiu com o jogador
+        vida vidaJogador = collision.gameObject.GetComponent<vida>();
+        if (vidaJogador != null)
+        {
+            vidaJogador.receberDano(Dano);
+            Debug.Log("Dano aplicado ao jogador!");
+        }
     }
 }
