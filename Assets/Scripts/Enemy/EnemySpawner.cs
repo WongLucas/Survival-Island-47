@@ -8,7 +8,11 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemyPrefab;
     public int baseEnemiesPerWave = 5;
     public float timeBetweenWaves = 5f;
-    public Transform[] spawnPoints;
+
+    [Header("Spawn Dinâmico")]
+    public Transform playerTransform;
+    public float spawnRadius = 20f;
+    public LayerMask groundLayer;
 
     [Header("Escalonamento de Dificuldade")]
     public float healthMultiplier = 1.2f;
@@ -21,6 +25,8 @@ public class EnemySpawner : MonoBehaviour
     private int waveNumber = 0;
     private int enemiesAlive = 0;
     private bool waveInProgress = false;
+    private bool canSkipWave = false;
+    private bool skipRequested = false;
 
     [Header("Iluminação dinâmica")]
     public Transform directionalLight; // arraste sua luz aqui
@@ -39,6 +45,11 @@ public class EnemySpawner : MonoBehaviour
         {
             StartCoroutine(StartNextWave());
         }
+
+        if (canSkipWave && Input.GetKeyDown(KeyCode.N))
+        {
+            skipRequested = true;
+        }
     }
 
     IEnumerator StartNextWave()
@@ -55,16 +66,31 @@ public class EnemySpawner : MonoBehaviour
         }
 
         float countdown = timeBetweenWaves;
-        while (countdown > 0)
+        canSkipWave = true;
+        skipRequested = false;
+
+        while (countdown > 0f)
         {
+            if (skipRequested)
+            {
+                if (countdownText != null)
+                    countdownText.text = "SOBREVIVA!";
+                    yield return new WaitForSeconds(2f); // mantém o texto por 2 segundos
+                    countdownText.text = "";
+                break;
+            }
+
             if (countdownText != null)
+            {
                 countdownText.text = $"Próxima wave em {countdown:F1}s";
+            }
+
             countdown -= Time.deltaTime;
             yield return null;
         }
 
-        if (countdownText != null)
-            countdownText.text = "";
+        canSkipWave = false;
+        skipRequested = false;
 
         int enemiesToSpawn = baseEnemiesPerWave + (waveNumber * 2);
 
@@ -85,8 +111,8 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
 
-        Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-        GameObject enemy = Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
+        Vector3 spawnPos = GetSpawnPositionAroundPlayer();
+        GameObject enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
 
         Enemy enemyScript = enemy.GetComponent<Enemy>();
         if (enemyScript != null)
@@ -98,7 +124,7 @@ public class EnemySpawner : MonoBehaviour
             float scaledHealth = enemyScript.baseHealth * Mathf.Pow(healthMultiplier, waveNumber - 1);
             float scaledSpeed = enemyScript.baseSpeed * Mathf.Pow(speedMultiplier, waveNumber - 1);
 
-        enemyScript.Initialize((int)scaledHealth, scaledSpeed);
+            enemyScript.Initialize((int)scaledHealth, scaledSpeed);
         }
         else
         {
@@ -120,5 +146,27 @@ public class EnemySpawner : MonoBehaviour
 
         light.rotation = finalRotation;
     }
+    Vector3 GetSpawnPositionAroundPlayer()
+    {
+        for (int attempt = 0; attempt < 10; attempt++)
+        {
+            Vector2 randomCircle = Random.insideUnitCircle.normalized * spawnRadius;
+            Vector3 candidatePos = playerTransform.position + new Vector3(randomCircle.x, 10f, randomCircle.y);
+
+            // Faz um Raycast para baixo até encontrar o terreno
+            if (Physics.Raycast(candidatePos, Vector3.down, out RaycastHit hit, 20f, groundLayer))
+            {
+                float slope = Vector3.Angle(hit.normal, Vector3.up);
+                if (slope < 50f)
+                {
+                return hit.point;                    
+                }
+            }
+        }
+
+        Debug.LogWarning("Falha ao encontrar uma posição de spawn válida.");
+        return playerTransform.position + Vector3.up * 2f; // fallback
+    }
+
 
 }
