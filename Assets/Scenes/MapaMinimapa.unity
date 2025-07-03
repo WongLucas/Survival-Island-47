@@ -17320,14 +17320,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dd803e129b14fc4c844d5c4fc66966b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 50
-  range: 100
-  fireRate: 1
+  damage: 30
+  range: 2.5
+  fireRate: 0.5
   muzzleFlash: {fileID: 616968645}
   impactEffect: {fileID: 100002, guid: 00fedc70b62a31e448e8ccc298257b56, type: 3}
   fpsCam: {fileID: 320535346}
-  maxAmmo: 14
-  reloadTime: 1.5
+  maxAmmo: 1000
+  reloadTime: 2
   gunAudio: {fileID: 0}
   shootClip: {fileID: 0}
   reloadClip: {fileID: 0}
@@ -22538,7 +22538,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13070cb01e07766438075c19d02fef84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 8832888157145037036, guid: 752646e139f861547a87b64ad9f93b9b,
+  enemyPrefab: {fileID: 5059500878555771459, guid: fb1ab8de497c1204599ccbdc68b4a20d,
     type: 3}
   baseEnemiesPerWave: 3
   timeBetweenWaves: 5
