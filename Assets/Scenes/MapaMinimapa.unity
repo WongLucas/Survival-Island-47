@@ -1051,6 +1051,53 @@ MonoBehaviour:
   - {fileID: 1665631094}
   selectedColor: {r: 1, g: 1, b: 1, a: 1}
   normalColor: {r: 0.4245283, g: 0.4245283, b: 0.4245283, a: 0.5}
+--- !u!1 &246085564
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 246085566}
+  - component: {fileID: 246085565}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &246085565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 246085564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fff699cfeb1b1034384a1fd51ec0a802, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chuvaParticulas: {fileID: 1175569893}
+  duracaoChuva: 60
+  duracaoSeca: 60
+--- !u!4 &246085566
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 246085564}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &320535342
 GameObject:
   m_ObjectHideFlags: 0
@@ -2007,7 +2054,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -11966,7 +12013,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -22647,13 +22694,14 @@ GameObject:
   - component: {fileID: 1175569896}
   - component: {fileID: 1175569895}
   - component: {fileID: 1175569894}
+  - component: {fileID: 1175569897}
   m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!199 &1175569894
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -22745,7 +22793,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -27473,6 +27521,21 @@ Transform:
   - {fileID: 570786648}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1175569897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1175569893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fff699cfeb1b1034384a1fd51ec0a802, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chuvaParticulas: {fileID: 1175569893}
+  duracaoChuva: 5
+  duracaoSeca: 5
 --- !u!1001 &1199787455
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34995,3 +35058,4 @@ SceneRoots:
   - {fileID: 392501054}
   - {fileID: 720135769}
   - {fileID: 220247892}
+  - {fileID: 246085566}
